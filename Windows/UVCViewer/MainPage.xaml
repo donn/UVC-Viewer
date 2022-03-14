@@ -1,0 +1,80 @@
+﻿<Page Name="PreviewPage" x:Class="UVCViewer.MainPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:UVCViewer" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" SizeChanged="PreviewSizeChanged">
+    <Canvas Name="PreviewCanvas" Width="{Binding ElementName=PreviewPage, Path=Width}" Height="{Binding ElementName=PreviewPage, Path=Height}">
+        <CaptureElement Name="PreviewControl" Stretch="Uniform" RightTapped="PreviewRightTapped" DoubleTapped="PreviewDoubleTapped" />
+    </Canvas>
+    <Page.BottomAppBar>
+        <CommandBar Name="BottomBar" OverflowButtonVisibility="Collapsed" Visibility="Visible" Background="#9FFF5476">
+            <!-- Text -->
+            <CommandBar.Content>
+                <TextBlock Name="CommandBarMessage" Text="Loading..." Margin="12,14" />
+            </CommandBar.Content>
+
+            <AppBarButton Name="FullScreenButton" Icon="FullScreen" Label="Full Screen" Tapped="FullScreenTapped" />
+
+            <!-- Audio -->
+            <AppBarButton Name="AudioButton" Icon="Volume" Label="Audio Source" Content="Open flyout" AllowFocusOnInteraction="True" RightTapped="AudioRightTapped">
+                <Button.Flyout>
+                    <Flyout>
+                        <Flyout.FlyoutPresenterStyle>
+                            <Style TargetType="FlyoutPresenter">
+                                <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
+                                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+                                <Setter Property="IsTabStop" Value="True" />
+                                <Setter Property="TabNavigation" Value="Cycle" />
+                            </Style>
+                        </Flyout.FlyoutPresenterStyle>
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <ComboBox Width="250" Name="AudioSourceList" Header="Audio Sources" ItemsSource="{x:Bind AudioDevices}" DisplayMemberPath="Name" SelectedIndex="0" SelectionChanged="AVSelectionChanged" />
+                            <Slider Name="VolumeSlider" Header="Volume" Width="100" ValueChanged="SliderChanged" />
+                            <AppBarButton Icon="Refresh" Tapped="RefreshDevicesTapped" Label="Refresh" />
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+            </AppBarButton>
+
+
+            <!-- Video -->
+            <AppBarButton Name="VideoButton" Icon="SolidStar" Label="Video Source" Content="Open flyout" AllowFocusOnInteraction="True" RightTapped="VideoRightTapped">
+                <Button.Flyout>
+                    <Flyout>
+                        <Flyout.FlyoutPresenterStyle>
+                            <Style TargetType="FlyoutPresenter">
+                                <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
+                                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+                                <Setter Property="IsTabStop" Value="True" />
+                                <Setter Property="TabNavigation" Value="Cycle" />
+                            </Style>
+                        </Flyout.FlyoutPresenterStyle>
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <ComboBox Width="250" Name="VideoSourceList" Header="Video Sources" ItemsSource="{x:Bind VideoDevices}" DisplayMemberPath="Name" SelectedIndex="0" SelectionChanged="AVSelectionChanged" />
+                            <AppBarButton Icon="Refresh" Tapped="RefreshDevicesTapped" Label="Refresh" Width="50" />
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+            </AppBarButton>
+
+            <!-- Refresh Device Lists -->
+            <AppBarButton Icon="Refresh" Label="Reload Preview" Tapped="ReloadPreviewTapped" />
+
+            <!-- About -->
+            <AppBarButton Icon="Important" Label="About" Content="Open flyout" AllowFocusOnInteraction="True">
+                <Button.Flyout>
+                    <Flyout>
+                        <Flyout.FlyoutPresenterStyle>
+                            <Style TargetType="FlyoutPresenter">
+                                <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
+                                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+                                <Setter Property="IsTabStop" Value="True" />
+                                <Setter Property="TabNavigation" Value="Cycle" />
+                            </Style>
+                        </Flyout.FlyoutPresenterStyle>
+                        <StackPanel>
+                            <TextBlock Text="About UVC Viewer" Style="{StaticResource TitleTextBlockStyle}" Margin="0,0,0,16" />
+                            <TextBlock Text="App Icon by Icons8: https://icons8.com/icons/set/camcorder-pro" Style="{StaticResource CaptionTextBlockStyle}" />
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+            </AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>
