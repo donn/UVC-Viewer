@@ -1,3 +1,4 @@
 .vscode/
 /uvc
 *.log
+build/

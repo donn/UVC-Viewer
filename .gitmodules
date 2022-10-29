@@ -1,0 +1,9 @@
+[submodule "Linux/submodules/ssco"]
+	path = Linux/submodules/ssco
+	url = https://github.com/donn/ssco
+[submodule "Linux/submodules/libuvc"]
+	path = Linux/submodules/libuvc
+	url = https://github.com/libuvc/libuvc
+[submodule "Linux/submodules/libsoundio"]
+	path = Linux/submodules/libsoundio
+	url = https://github.com/andrewrk/libsoundio
