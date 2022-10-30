@@ -23,12 +23,6 @@ void signalHandler(int signum) {
 RB::Ringbuffer< uvc_frame_t *, 256 > frames;
 
 void video_callback(uvc_frame_t *frame, void *ptr) {
-    auto bgr = uvc_allocate_frame(frame->width * frame->height * 3);
-    if (!bgr) {
-        std::cerr << "Failed to allocate bgr frame" << std::endl;
-        return;
-    }
-
     printf(
         "callback! frame_format = %d, width = %d, height = %d, length = %lu, ptr = %p\n",
         frame->frame_format,
@@ -49,7 +43,7 @@ void video_callback(uvc_frame_t *frame, void *ptr) {
     //     return;
     // }
 
-    auto result = frames.insert(bgr);
+    auto result = frames.insert(frame);
     if (!result) {
         std::cerr << "fb overflow" << std::endl;
     }
@@ -407,8 +401,6 @@ int main(int argc, char **argv) {
 
     // Video
     // if (video) {
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // OpenGL 3.0
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0); // OpenGL 3.0
     auto window = glfwCreateWindow(width, height, "UVC Viewer", NULL, NULL);
     if (!window) {
         std::cerr << "Failed to open a window." << std::endl;
@@ -449,14 +441,11 @@ int main(int argc, char **argv) {
     while (!glfwWindowShouldClose(window)) {
         if (auto popped = frames.remove(&frame)) {
             fprintf(stderr, "got frame\n");
+            glClearColor(1.f, 1.f, 1.f, 1.f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             uint8_t *frameBuffer = (uint8_t *)frame->data;
-            std::cerr << frameBuffer[30] << std::endl;
-
-            glDrawPixels(1, 1, GL_BGR, GL_UNSIGNED_BYTE, oneredpixel);
-            glDrawPixels(100, 100, GL_BGR, GL_UNSIGNED_BYTE, frame->data);
+            glDrawPixels(width, height, GL_BGR, GL_UNSIGNED_BYTE, frameBuffer);
             glfwSwapBuffers(window);
-            uvc_free_frame(frame);
         } else {
             // std::cerr << "Underflow" << std::endl;
         }

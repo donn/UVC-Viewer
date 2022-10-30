@@ -24,7 +24,7 @@ option(BUILD_TESTS OFF)
 option(ENABLE_JACK "Enable JACK backend" OFF)
 option(ENABLE_PULSEAUDIO "Enable PulseAudio backend" ON)
 option(ENABLE_ALSA "Enable ALSA backend" OFF)
-option(ENABLE_COREAUDIO "Enable CoreAudio backend" OFF)
+option(ENABLE_COREAUDIO "Enable CoreAudio backend" ON)
 option(ENABLE_WASAPI "Enable WASAPI backend" OFF)
 add_subdirectory(submodules/libsoundio)
 
@@ -32,6 +32,7 @@ find_package(PulseAudio)
 find_package(OpenGL)
 
 include_directories(include)
+include_directories(${libsoundio_SOURCE_DIR})
 
 # include_directories(/usr/include/opencv4)
 # set (CMAKE_EXE_LINKER_FLAGS "-lopencv_highgui -lopencv_core")
@@ -40,7 +41,6 @@ add_executable(uvc-viewer src/main.cpp)
 target_link_libraries(uvc-viewer
     ssco
     uvc_static
-    ${PULSEAUDIO_LIBRARY}
     libsoundio_static
     glfw
     scope_guard
