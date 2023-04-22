@@ -2,3 +2,4 @@
 /uvc
 *.log
 build/
+result/

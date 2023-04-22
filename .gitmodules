@@ -4,12 +4,12 @@
 [submodule "Linux/submodules/libuvc"]
 	path = Linux/submodules/libuvc
 	url = https://github.com/libuvc/libuvc
-[submodule "Linux/submodules/libsoundio"]
-	path = Linux/submodules/libsoundio
-	url = https://github.com/andrewrk/libsoundio
 [submodule "Linux/submodules/glfw"]
 	path = Linux/submodules/glfw
 	url = https://github.com/glfw/glfw
 [submodule "Linux/submodules/scope_guard"]
 	path = Linux/submodules/scope_guard
 	url = https://github.com/Neargye/scope_guard
+[submodule "Linux/submodules/fmt"]
+	path = Linux/submodules/fmt
+	url = https://github.com/fmtlib/fmt
